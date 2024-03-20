@@ -1,0 +1,43 @@
+.auth{
+    /* background-color: var(--sidebar-color); */
+    background-image: url(../../assets/img/auth-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.secondary-auth{
+    background-color: rgba(255, 255, 255, 0.059);
+    border-radius: 40px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 30px;
+    z-index: 999;
+}
+
+.auth-input{
+    background-color: rgba(0, 0, 0, 0.059);
+    border: 1px solid var(--text-color-dark);
+    border-radius: 8px;
+    height: 40px;
+    color: var(--text-color-dark);
+    padding: 0 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.auth-input:focus{
+    outline: none;
+    border: 1.5px solid white;
+}
+
+.bg-color{
+    height: 100vh;
+    top: 0;
+    width: 100%;
+    background-color: #0f172af6;
+    position: fixed;
+}

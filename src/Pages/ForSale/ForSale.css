@@ -1,0 +1,76 @@
+.for-sale .portion {
+  background-color: var(--portion-bg-color);
+}
+
+.for-sale .portion .input {
+  font-size: 12px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.for-sale .portion .input:focus {
+  outline: none;
+}
+
+.for-sale .submit-button {
+  font-size: 15px;
+  font-weight: 600;
+  padding: 0 10px;
+  width: 200px;
+  background-color: var(--sidebar-color);
+  border-radius: 8px;
+  height: 40px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  transition: transform 0.2s ease;
+}
+
+.for-sale .submit-button:hover {
+  transform: scale(1.02);
+}
+
+.for-sale .submit-button:active {
+  transform: scale(0.99);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb);
+  border-radius: 5px;
+}
+
+.custom-select .ant-select-selector {
+  background-color: rgb(240, 239, 239) !important;
+  border: none !important;
+  min-height: 35px;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500;
+}
+
+.custom-select-dark .ant-select-selector {
+  background-color: #444d5b !important;
+  border: none !important;
+  min-height: 35px;
+  color: var(--text-color-dark) !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 13px !important;
+}
+
+.ant-select-selector:hover {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+#myMap {
+  height: 350px;
+  width: 680px;
+}
