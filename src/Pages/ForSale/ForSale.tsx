@@ -6,9 +6,10 @@ import { RootState, updatePageNavigation } from "../../Features/Features";
 import PagesHeader from "../../Components/PagesHeader/PagesHeader";
 import { deleteRentalHomeById, getSaleHomes } from "../../Api/api";
 import { IMAGE_URL } from "../../url";
+import ViewForSale from "./ViewForSale";
 
 import { MdDelete } from "react-icons/md";
-import { MdEditSquare } from "react-icons/md";
+// import { MdEditSquare } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Modal } from 'antd';
@@ -21,7 +22,9 @@ const ForSale = () => {
   const dispatch = useDispatch();
   const darkMode = useSelector((state: RootState) => state.darkMode);
   const [data, setData]: any[] = useState([]);
-  const [ viewInfo, setViewInfo ] = useState(false);
+  const [ viewHome, setViewHome ] = useState(false);
+  const [ singleData, setSingleData ] = useState({});
+
   useEffect(() => {
     const fetchData = async() => {
       try{
@@ -58,9 +61,16 @@ const ForSale = () => {
       }
     });
   };
+  const fn_viewInfo = (data: any) => {
+    setSingleData(data);
+    setViewHome(true);
+  }
   return (
     <div className="get-for-rent">
       <PagesHeader title="Homes For Sale" nav={"Homes For Sale"} subnav="" />
+      {viewHome && (
+        <ViewForSale viewHome={viewHome} setViewHome={setViewHome} singleData={singleData} />
+      )}
       <div className="m-5 flex flex-col sm:flex-row justify-between items-center gap-3">
         <p className="font-[600] text-[grey] text-[13px]">
           Details of Sale Homes
@@ -112,7 +122,7 @@ const ForSale = () => {
                 <td className="flex items-center h-[50px] gap-1">
                   <MdDelete className="text-[17px] cursor-pointer hover:scale-[1.1]" onClick={() => showDeleteConfirm(item?._id)}  />
                   {/* <MdEditSquare className="text-[17px] cursor-pointer hover:scale-[1.1]" /> */}
-                  <IoMdEye className="text-[19px] cursor-pointer hover:scale-[1.12]" />
+                  <IoMdEye className="text-[19px] cursor-pointer hover:scale-[1.12]" onClick={() => fn_viewInfo(item)} />
                 </td>
               </tr>
               )) : (
