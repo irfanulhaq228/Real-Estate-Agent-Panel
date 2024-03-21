@@ -165,7 +165,7 @@ const CreateForSale = () => {
     formData.append('address', data?.address);
     formData.append('bathrooms', data?.bathrooms);
     formData.append('bedrooms', data?.bedrooms);
-    formData.append('salePrice', data?.monthlyPrice);
+    formData.append('salePrice', data?.salePrice);
     formData.append('overview', data?.overview);
     formData.append('services', data?.services);
     formData.append('title', data?.title);

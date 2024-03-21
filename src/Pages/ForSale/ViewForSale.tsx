@@ -39,14 +39,20 @@ const ViewForSale = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Title</p>
             <p className="text-[13px]">{singleData?.title}</p>
           </div>
-          <div className="flex flex-col md:col-span-2">
+          <div className="flex flex-col md:col-span-2 md:mb-3">
             <p className="font-[600] text-[13px]">Address</p>
             <p className="text-[13px]">{singleData?.address}</p>
           </div>
-          <div className="flex flex-col md:col-span-2">
+          <div className={`flex flex-col md:mb-3 ${!singleData?.petFees && "md:col-span-2"}`}>
             <p className="font-[600] text-[13px]">Sale Price</p>
             <p className="text-[13px]">$ {singleData?.salePrice}</p>
           </div>
+          {singleData?.petFees && (
+            <div className={`flex flex-col md:mb-3`}>
+            <p className="font-[600] text-[13px]">Pet Fees</p>
+            <p className="text-[13px]">$ {singleData?.petFees}</p>
+          </div>
+          )}
           {(singleData?.property === "house" || singleData?.property === "condo") ? (
             <>
               <div className="flex flex-col">

@@ -42,7 +42,7 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Title</p>
             <p className="text-[13px]">{singleData?.title}</p>
           </div>
-          <div className="flex flex-col md:col-span-2">
+          <div className="flex flex-col md:col-span-2 md:mb-3">
             <p className="font-[600] text-[13px]">Address</p>
             <p className="text-[13px]">{singleData?.address}</p>
           </div>
@@ -54,24 +54,30 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Advance Payment</p>
             <p className="text-[13px]">$ {singleData?.advancePayment}</p>
           </div>
+          {singleData?.petFees && (
+            <div className="flex flex-col md:col-span-2">
+              <p className="font-[600] text-[13px]">Pet Fees</p>
+              <p className="text-[13px]">$ {singleData?.petFees}</p>
+            </div>
+          )}
           {singleData?.property === "house" ? (
             <>
-              <div className="flex flex-col">
+              <div className="flex flex-col md:mt-3">
                 <p className="font-[600] text-[13px]">Lot Sqft.</p>
                 <p className="text-[13px]">{singleData?.lotSqft} sqft.</p>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col md:mt-3">
                 <p className="font-[600] text-[13px]">Building Size</p>
                 <p className="text-[13px]">{singleData?.buildingSize} sqft.</p>
               </div>
             </>
           ) : (
             <>
-              <div className="flex flex-col">
+              <div className="flex flex-col md:mt-3">
                 <p className="font-[600] text-[13px]">Sqft.</p>
                 <p className="text-[13px]">{singleData?.sizeSqft} sqft.</p>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col md:mt-3">
                 <p className="font-[600] text-[13px]">Acre</p>
                 <p className="text-[13px]">{singleData?.sizeAcre} sqft.</p>
               </div>
