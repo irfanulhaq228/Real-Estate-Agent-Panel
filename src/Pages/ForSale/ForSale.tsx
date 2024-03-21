@@ -90,6 +90,7 @@ const ForSale = () => {
               >
                 <td>&nbsp;Sr #</td>
                 <td className="ps-1">Images</td>
+                <td className="ps-1 hidden sm:table-cell">Property</td>
                 <td className="ps-1">Title</td>
                 <td className="ps-1 hidden sm:table-cell">Address</td>
                 <td className="ps-1 hidden sm:table-cell">Sale Price($)</td>
@@ -111,8 +112,9 @@ const ForSale = () => {
                 <td className="ps-1">
                   <img src={`${IMAGE_URL}/${item?.images[0]}`} className="h-[50px] w-[80px] rounded" style={{ objectFit: "cover" }} />
                 </td>
+                <td className="ps-1 hidden sm:table-cell capitalize">{item?.property}</td>
                 <td className="ps-1">{item?.title}</td>
-                <td className="ps-1 hidden sm:table-cell">{item?.address}</td>
+                <td className="ps-1 hidden sm:table-cell w-[150px]">{item?.address}</td>
                 <td className="ps-1 hidden sm:table-cell">$ {item?.salePrice}</td>
                 <td className="ps-1 hidden sm:table-cell">{item?.bedrooms}</td>
                 <td className="ps-1 hidden sm:table-cell">{item?.bathrooms}</td>

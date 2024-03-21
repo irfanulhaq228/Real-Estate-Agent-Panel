@@ -226,7 +226,7 @@ const CreateForSale = () => {
               darkMode && "text-[var(--text-color-dark)]"
             }`}
           >
-            Property Title
+            Property
           </label>
           <div className="flex gap-10 items-center">
             <div className="flex">

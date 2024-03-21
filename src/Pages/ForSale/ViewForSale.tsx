@@ -5,9 +5,6 @@ import { BsDot } from "react-icons/bs";
 
 //@ts-ignore
 const ViewForSale = ({ viewHome, setViewHome, singleData }) => {
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
   return (
     <Modal
       title="View Home for Sale"
@@ -25,7 +22,7 @@ const ViewForSale = ({ viewHome, setViewHome, singleData }) => {
       <hr />
       <div style={{ fontFamily: "Montserrat" }} className="my-5">
         <p className="font-[600] text-[13px] mb-2">Images</p>
-        <Carousel afterChange={onChange} autoplay={true} autoplaySpeed={3000} infinite={true}>
+        <Carousel autoplay={true} autoplaySpeed={3000} infinite={true}>
           {singleData?.images?.map((item: any) => (
             <div>
               <img src={`${IMAGE_URL}/${item}`} className="h-[250px] w-full object-cover object-center rounded-[10px]" />
@@ -50,7 +47,7 @@ const ViewForSale = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Sale Price</p>
             <p className="text-[13px]">$ {singleData?.salePrice}</p>
           </div>
-          {singleData?.property === "house" ? (
+          {(singleData?.property === "house" || singleData?.property === "condo") ? (
             <>
               <div className="flex flex-col">
                 <p className="font-[600] text-[13px]">Lot Sqft.</p>
@@ -61,7 +58,18 @@ const ViewForSale = ({ viewHome, setViewHome, singleData }) => {
                 <p className="text-[13px]">{singleData?.buildingSize} sqft.</p>
               </div>
             </>
-          ) : null}
+          ) : (
+            <>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Sqft.</p>
+                <p className="text-[13px]">{singleData?.sizeSqft} sqft.</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Acre</p>
+                <p className="text-[13px]">{singleData?.sizeAcre} sqft.</p>
+              </div>
+            </>
+          )}
           <div className="flex flex-col">
             <p className="font-[600] text-[13px]">No. of Bedrooms</p>
             <p className="text-[13px]">{singleData?.bedrooms}</p>

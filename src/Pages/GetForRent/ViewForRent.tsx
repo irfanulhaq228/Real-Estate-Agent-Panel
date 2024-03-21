@@ -5,10 +5,6 @@ import { BsDot } from "react-icons/bs";
 
 //@ts-ignore
 const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
-  console.log(singleData);
-  const onChange = (currentSlide: number) => {
-    console.log(currentSlide);
-  };
   return (
     <Modal
       title="View Rental Home"
@@ -26,10 +22,13 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
       <hr />
       <div style={{ fontFamily: "Montserrat" }} className="my-5">
         <p className="font-[600] text-[13px] mb-2">Images</p>
-        <Carousel afterChange={onChange} autoplay={true} autoplaySpeed={3000} infinite={true}>
+        <Carousel autoplay={true} autoplaySpeed={3000} infinite={true}>
           {singleData?.images?.map((item: any) => (
             <div>
-              <img src={`${IMAGE_URL}/${item}`} className="h-[250px] w-full object-cover object-center rounded-[10px]" />
+              <img
+                src={`${IMAGE_URL}/${item}`}
+                className="h-[250px] w-full object-cover object-center rounded-[10px]"
+              />
             </div>
           ))}
         </Carousel>
@@ -66,7 +65,18 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
                 <p className="text-[13px]">{singleData?.buildingSize} sqft.</p>
               </div>
             </>
-          ) : null}
+          ) : (
+            <>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Sqft.</p>
+                <p className="text-[13px]">{singleData?.sizeSqft} sqft.</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Acre</p>
+                <p className="text-[13px]">{singleData?.sizeAcre} sqft.</p>
+              </div>
+            </>
+          )}
           <div className="flex flex-col">
             <p className="font-[600] text-[13px]">No. of Bedrooms</p>
             <p className="text-[13px]">{singleData?.bedrooms}</p>
@@ -89,7 +99,8 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Key Features</p>
             {singleData?.keyFeatures?.split(",")?.map((item: any) => (
               <div className="flex items-center">
-                <BsDot className="text-[25px]" /><p className="text-[13px] capitalize">{item}</p>
+                <BsDot className="text-[25px]" />
+                <p className="text-[13px] capitalize">{item}</p>
               </div>
             ))}
           </div>
@@ -97,7 +108,8 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
             <p className="font-[600] text-[13px]">Services</p>
             {singleData?.services?.split(",")?.map((item: any) => (
               <div className="flex items-center">
-                <BsDot className="text-[25px]" /><p className="text-[13px] capitalize">{item}</p>
+                <BsDot className="text-[25px]" />
+                <p className="text-[13px] capitalize">{item}</p>
               </div>
             ))}
           </div>
@@ -106,7 +118,10 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
         <div>
           <p className="font-[600] text-[13px] mb-2 mt-4">Images</p>
           <video width="640" height="360" controls className="rounded-[10px]">
-            <source src={`${IMAGE_URL}/${singleData?.video}`} type="video/mp4" />
+            <source
+              src={`${IMAGE_URL}/${singleData?.video}`}
+              type="video/mp4"
+            />
           </video>
         </div>
       </div>
