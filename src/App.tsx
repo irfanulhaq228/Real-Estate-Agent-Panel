@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
-  Routes,
-  // useLocation
+  Routes
 } from "react-router-dom";
 
 import { RootState, updateLogin } from "./Features/Features";
@@ -34,9 +33,6 @@ function AppContent() {
   const dispatch = useDispatch();
   const darkMode = useSelector((state: RootState) => state.darkMode);
   const loggedIn = useSelector((state: RootState) => state.loggedIn);
-  // const location = useLocation();
-
-  // const hideSidebarAndNavbar = location.pathname === "/sign-up" || location.pathname === "/sign-in";
 
   useEffect(() => {
     if(localStorage.getItem('agent')){

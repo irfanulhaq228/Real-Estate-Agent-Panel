@@ -1,7 +1,7 @@
 import "./ForRent.css";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Select, Divider, Space, Input, Button } from "antd";
+import { Select } from "antd";
 import ImageUploading from "react-images-uploading";
 
 import PagesHeader from "../../Components/PagesHeader/PagesHeader";
@@ -39,32 +39,8 @@ const ForRent = () => {
   const filteredKeyFeatures = KEY_FEATURES.filter(
     (o) => !keyFeatures.includes(o)
   );
-  const fn_addFeatures = () => {
-    const inputElement = document.getElementById(
-      "keyFeaturesAdd"
-    ) as HTMLInputElement | null;
-    if (inputElement) {
-      const inputValue = inputElement.value.trim();
-      if (inputValue !== "") {
-        setKeyFeatures([...keyFeatures, inputValue]);
-        inputElement.value = "";
-      }
-    }
-  };
   const [services, setServices] = useState<string[]>([]);
   const filteredServices = SERVICES.filter((o) => !services.includes(o));
-  const fn_addServices = () => {
-    const inputElement = document.getElementById(
-      "servicesAdd"
-    ) as HTMLInputElement | null;
-    if (inputElement) {
-      const inputValue = inputElement.value.trim();
-      if (inputValue !== "") {
-        setServices([...services, inputValue]);
-        inputElement.value = "";
-      }
-    }
-  };
   const [selectedVideo, setSelectedVideo] = useState([]);
   const fileInputRef: any = useRef(null);
   const [property, setProperty] = useState("house");
@@ -80,6 +56,7 @@ const ForRent = () => {
   useEffect(() => {
     dispatch(updatePageNavigation("forRent"));
   }, [dispatch]);
+
   const fn_buildingSize = (sizeInSqft: number) => {
     if (isNaN(sizeInSqft)) {
       setSizeSqft(0);
@@ -726,27 +703,6 @@ const ForRent = () => {
               label: item,
             }))}
             className={`${!darkMode ? "custom-select" : "custom-select-dark"}`}
-            dropdownRender={(menu) => (
-              <>
-                {menu}
-                <Divider style={{ margin: "8px 0" }} />
-                <Space style={{ padding: "0 8px 4px" }}>
-                  <Input
-                    placeholder="Enter More Features"
-                    id="keyFeaturesAdd"
-                    onKeyDown={(e) => e.stopPropagation()}
-                    onPressEnter={fn_addFeatures}
-                  />
-                  <Button
-                    type="text"
-                    onClick={fn_addFeatures}
-                    className="bg-[var(--sidebar-color)] text-white font-[500]"
-                  >
-                    Add
-                  </Button>
-                </Space>
-              </>
-            )}
           />
         </div>
         <div className="w-full flex flex-col gap-2">
@@ -768,41 +724,14 @@ const ForRent = () => {
               label: item,
             }))}
             className={`${!darkMode ? "custom-select" : "custom-select-dark"}`}
-            dropdownRender={(menu) => (
-              <>
-                {menu}
-                <Divider style={{ margin: "8px 0" }} />
-                <Space style={{ padding: "0 8px 4px" }}>
-                  <Input
-                    placeholder="Enter More Services"
-                    id="servicesAdd"
-                    onKeyDown={(e) => e.stopPropagation()}
-                    onPressEnter={fn_addServices}
-                  />
-                  <Button
-                    type="text"
-                    onClick={fn_addServices}
-                    className="bg-[var(--sidebar-color)] text-white font-[500]"
-                  >
-                    Add
-                  </Button>
-                </Space>
-              </>
-            )}
           />
         </div>
       </div>
       {/* section-4 */}
-      {/* <div className={"portion rounded m-5 p-5 flex flex-col gap-5"}>
-        <p
-          className={`text-[16px] font-[600] ${
-            darkMode && "text-[var(--text-color-dark)]"
-          }`}
-        >
-          Nearby Areas
-        </p>
-        <div id="myMap"></div>
-      </div> */}
+      <div className="portion rounded m-5 p-5 flex flex-col gap-5">
+        <p className={`text-[16px] font-[600]`}>Nearby Areas</p>
+        <div id="myMap" style={{ height: '350px', width: '680px' }}></div>
+      </div>
       {/* button */}
       <button
         className={`mx-5 mb-5 submit-button ${
