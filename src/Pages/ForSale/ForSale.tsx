@@ -128,7 +128,7 @@ const ForSale = () => {
                 </td>
               </tr>
               )) : (
-                <td colSpan={9} className={`text-[9px] sm:text-[10px] md:text-[12px] h-[45px] text-center border-b border-[var(--border-color)] ${
+                <td colSpan={10} className={`text-[9px] sm:text-[10px] md:text-[12px] h-[45px] text-center border-b border-[var(--border-color)] ${
                   darkMode && "text-[var(--text-color-dark)]"
                 }`}>
                   No Data Found

@@ -8,7 +8,7 @@ import PagesHeader from "../../Components/PagesHeader/PagesHeader";
 import { deleteRentalHomeById, getRentalHomes } from "../../Api/api";
 import { IMAGE_URL } from "../../url";
 
-import { MdDelete, MdEditSquare } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { IoMdEye } from "react-icons/io";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
@@ -84,7 +84,7 @@ const GetForRent = () => {
         </p>
       </div>
       <div className="bg-[var(--portion-bg-color)] m-1 sm:m-5 rounded py-5 px-2 sm:p-5">
-        <div>
+        <div className="max-h-[250px] overflow-y-scroll">
           <table className="w-full">
             <thead>
               <tr
@@ -127,7 +127,6 @@ const GetForRent = () => {
                 </td>
                 <td className="flex items-center h-[50px] gap-1">
                   <MdDelete className="text-[17px] cursor-pointer hover:scale-[1.1]" onClick={() => showDeleteConfirm(item?._id)}  />
-                  {/* <MdEditSquare className="text-[17px] cursor-pointer hover:scale-[1.1]" /> */}
                   <IoMdEye onClick={() => fn_viewInfo(item)} className="text-[19px] cursor-pointer hover:scale-[1.12]" />
                 </td>
               </tr>

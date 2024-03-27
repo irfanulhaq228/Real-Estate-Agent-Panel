@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Modal, Carousel } from "antd";
 import { IMAGE_URL } from "../../url";
 
@@ -5,6 +6,7 @@ import { BsDot } from "react-icons/bs";
 
 //@ts-ignore
 const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
+  const [ mapShows, setmapShows ]:any = useState(); 
   return (
     <Modal
       title="View Rental Home"
@@ -60,26 +62,30 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
               <p className="text-[13px]">$ {singleData?.petFees}</p>
             </div>
           )}
-          {singleData?.property === "house" ? (
+          {singleData?.property !== "appartment" ? (
             <>
-              <div className="flex flex-col md:mt-3">
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px] md:mt-3">Sqft.</p>
+                <p className="text-[13px]">{singleData?.sqft} sqft.</p>
+              </div>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Acre</p>
+                <p className="text-[13px]">{(parseInt(singleData?.sqft)/43560).toFixed(2)} acre</p>
+              </div>
+              <div className="flex flex-col">
                 <p className="font-[600] text-[13px]">Lot Sqft.</p>
                 <p className="text-[13px]">{singleData?.lotSqft} sqft.</p>
               </div>
-              <div className="flex flex-col md:mt-3">
-                <p className="font-[600] text-[13px]">Building Size</p>
-                <p className="text-[13px]">{singleData?.buildingSize} sqft.</p>
+              <div className="flex flex-col">
+                <p className="font-[600] text-[13px]">Lot Acre</p>
+                <p className="text-[13px]">{(parseInt(singleData?.lotSqft)/43560).toFixed(2)} acre</p>
               </div>
             </>
           ) : (
             <>
-              <div className="flex flex-col md:mt-3">
+              <div className="flex flex-col md:mt-3 md:col-span-2">
                 <p className="font-[600] text-[13px]">Sqft.</p>
-                <p className="text-[13px]">{singleData?.sizeSqft} sqft.</p>
-              </div>
-              <div className="flex flex-col md:mt-3">
-                <p className="font-[600] text-[13px]">Acre</p>
-                <p className="text-[13px]">{singleData?.sizeAcre} sqft.</p>
+                <p className="text-[13px]">{singleData?.sqft} sqft.</p>
               </div>
             </>
           )}
@@ -122,13 +128,42 @@ const ViewForRent = ({ viewHome, setViewHome, singleData }) => {
         </div>
         <hr />
         <div>
-          <p className="font-[600] text-[13px] mb-2 mt-4">Images</p>
+          <p className="font-[600] text-[13px] mb-2 mt-4">Video</p>
           <video width="640" height="360" controls className="rounded-[10px]">
             <source
               src={`${IMAGE_URL}/${singleData?.video}`}
               type="video/mp4"
             />
           </video>
+        </div>
+        <hr className="mt-5" />
+        <div>
+          <p className="font-[600] text-[13px] mb-2 mt-4">Nearby Areas</p>
+          <div className="flex flex-col gap-2">
+            {singleData?.nearbyAddresses && singleData?.nearbyAddresses?.map((item: any, index: any) => (
+              <div className="bg-[var(--border-color)] py-2 px-1 rounded-[5px]">
+                <div className="flex items-center">
+                  <BsDot className="text-[25px]" />
+                  <p className="text-[13px]">{item?.address}</p>
+                </div>
+                <div className="text-right">
+                  <button className="text-[12px] font-[600] text-[var(--sidebar-color)] py-1 px-2 rounded mt-1 hover:underline" onClick={() => {if(mapShows === index){setmapShows()}else{setmapShows(index)}}}>{mapShows === index ? "Close Map" : "View on Map"}</button>
+                </div>
+                {mapShows ===index && (
+                  <iframe
+                    width="100%"
+                    height="200"
+                    style={{ border: "none", marginTop: "10px", borderRadius: "10px" }}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://maps.google.com/maps?q=${item?.lat},${item?.lon}&z=${12}&output=embed`}
+                    title="google map"
+                  >
+                  </iframe>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <hr />
