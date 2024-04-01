@@ -105,21 +105,21 @@ const CreateForSale = () => {
     }
     if (petFees === "no") {
       if(property === "appartment"){
-        if(Object.keys(section1Data)?.length !== 6){
+        if(Object.keys(section1Data)?.length !== 8){
           return toast.error("Fill all Fields")
         }
       }else{
-        if(Object.keys(section1Data)?.length !== 7){
+        if(Object.keys(section1Data)?.length !== 9){
           return toast.error("Fill all Fields")
         }
       }
     }else{
       if(property === "appartment"){
-        if(Object.keys(section1Data)?.length !== 7){
+        if(Object.keys(section1Data)?.length !== 9){
           return toast.error("Fill all Fields")
         }
       }else{
-        if(Object.keys(section1Data)?.length !== 8){
+        if(Object.keys(section1Data)?.length !== 10){
           return toast.error("Fill all Fields")
         }
       }
@@ -148,6 +148,8 @@ const CreateForSale = () => {
     formData.append('services', data?.services);
     formData.append('title', data?.title);
     formData.append('keyFeatures', data?.keyFeatures);
+    formData.append('fromTourDate', data?.fromTourDate);
+    formData.append('toTourDate', data?.toTourDate);
     formData.append('sqft', data?.sqft);
     formData.append('nearbyAddresses', JSON.stringify(nearbyAddresses));
     formData.append('location', JSON.stringify({ type: "Point", coordinates: [center?.lng, center?.lat] }));
@@ -637,6 +639,49 @@ const CreateForSale = () => {
             }`}
             onChange={(e) => fn_sectionOneData("salePrice", e.target.value)}
           />
+        </div>
+        <div className="w-full flex flex-col gap-2">
+          <label
+            className={`text-[13px] font-[500] ${
+              darkMode && "text-[var(--text-color-dark)]"
+            }`}
+          >
+            Select Tour Date
+          </label>
+          <div className="flex gap-5">
+            <div className="flex-1 flex flex-col gap-1">
+              <label className={`text-[12px] font-[600] ${
+                darkMode && "text-[var(--text-color-dark)]"
+              }`}>From Date</label>
+              <input
+                type="date"
+                className={`input ${
+                  darkMode
+                    ? "bg-[#ffffff27] text-[var(--text-color-dark)]"
+                    : "bg-[#ffffff80]"
+                }`}
+                onChange={(e) =>
+                  fn_sectionOneData("fromTourDate", e.target.value)
+                }
+              />
+            </div>
+            <div className="flex-1 flex flex-col gap-1">
+              <label className={`text-[12px] font-[600] ${
+                darkMode && "text-[var(--text-color-dark)]"
+              }`}>To Date</label>
+              <input
+                type="date"
+                className={`input ${
+                  darkMode
+                    ? "bg-[#ffffff27] text-[var(--text-color-dark)]"
+                    : "bg-[#ffffff80]"
+                }`}
+                onChange={(e) =>
+                  fn_sectionOneData("toTourDate", e.target.value)
+                }
+              />
+            </div>
+          </div>
         </div>
         <div className="w-full flex flex-col gap-2">
           <label
