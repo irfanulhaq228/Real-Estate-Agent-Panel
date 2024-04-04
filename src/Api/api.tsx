@@ -34,12 +34,33 @@ export const homeForRentApi = async(data: any) => {
 
 export const getRentalHomes = async() => {
     try{
-        const result = await axios.get(`${URL}/home-for-rent`);
+        const storedData = localStorage.getItem('agent');
+        let id = '';
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            id = parsedData._id;
+        }
+        const result = await axios.get(`${URL}/home-for-rent/${id}`);
         return result;
     }catch(error){
         return error
     }
-}
+};
+
+export const getRentalHomesByAgentId = async() => {
+    try{
+        const storedData = localStorage.getItem('agent');
+        let id = '';
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            id = parsedData._id;
+        }
+        const result = await axios.get(`${URL}/home-for-rent/by-agent/${id}`);
+        return result;
+    }catch(error){
+        return error
+    }
+};
 
 export const deleteRentalHomeById = async(id: string) => {
     try{
@@ -78,3 +99,18 @@ export const getSaleHomes = async() => {
         return error
     }
 }
+
+export const getSaleHomesByAgentId = async() => {
+    try{
+        const storedData = localStorage.getItem('agent');
+        let id = '';
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            id = parsedData._id;
+        }
+        const result = await axios.get(`${URL}/home-for-sale/by-agent/${id}`);
+        return result;
+    }catch(error){
+        return error
+    }
+};

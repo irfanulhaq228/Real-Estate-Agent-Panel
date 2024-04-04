@@ -12,6 +12,8 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [zipcode, setZipcode] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -30,6 +32,12 @@ const SignUp = () => {
         if(address == ""){
             return toast.error("Enter Your Complete Address")
         }
+        if(city == ""){
+            return toast.error("Enter Your City Name")
+        }
+        if(zipcode == ""){
+            return toast.error("Enter Zipcode")
+        }
         if(password == ""){
             return toast.error("Enter Your Password")
         }
@@ -39,7 +47,7 @@ const SignUp = () => {
         if(password !== confirmPassword){
             return toast.error("Password not Matched")
         }
-        const data = { name, email, password, address, phone }
+        const data = { name, email, password, address, city, zipcode, phone }
         setLoader(true);
         const result = await signupAgentApi(data);
         //@ts-ignore
@@ -59,7 +67,7 @@ const SignUp = () => {
             //@ts-ignore
             return toast.error(result?.response?.data?.message);
         }
-    }
+    };
   return (
     <div className="auth">
         <div className="secondary-auth flex flex-col md:flex-row justify-between w-[90%] lg:w-[80%] xl:w-[1000px] gap-[80px] md:gap-0">
@@ -86,6 +94,14 @@ const SignUp = () => {
                 <div className="w-[100%] sm:w-[70%] flex flex-col gap-2">
                     <label className="text-[13px] text-[var(--text-color-dark)] font-[500]">Address</label>
                     <input className="auth-input" onChange={(e) => setAddress(e.target.value)} />
+                </div>
+                <div className="w-[100%] sm:w-[70%] flex flex-col gap-2">
+                    <label className="text-[13px] text-[var(--text-color-dark)] font-[500]">City</label>
+                    <input className="auth-input" onChange={(e) => setCity(e.target.value)} />
+                </div>
+                <div className="w-[100%] sm:w-[70%] flex flex-col gap-2">
+                    <label className="text-[13px] text-[var(--text-color-dark)] font-[500]">Zip Code</label>
+                    <input type="number" className="auth-input" onChange={(e) => setZipcode(e.target.value)} />
                 </div>
                 <div className="w-[100%] sm:w-[70%] flex flex-col gap-2">
                     <label className="text-[13px] text-[var(--text-color-dark)] font-[500]">Password</label>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { RootState, updatePageNavigation } from "../../Features/Features";
 import PagesHeader from "../../Components/PagesHeader/PagesHeader";
-import { deleteRentalHomeById, getSaleHomes } from "../../Api/api";
+import { deleteRentalHomeById, getSaleHomesByAgentId } from "../../Api/api";
 import { IMAGE_URL } from "../../url";
 import ViewForSale from "./ViewForSale";
 
@@ -28,7 +28,7 @@ const ForSale = () => {
   useEffect(() => {
     const fetchData = async() => {
       try{
-        const result: any = await getSaleHomes();
+        const result: any = await getSaleHomesByAgentId();
         if(result?.status === 200){
           setData(result?.data?.message);
         }
