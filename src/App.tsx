@@ -20,6 +20,7 @@ import GetForRent from "./Pages/GetForRent/GetForRent";
 import EditForRent from "./Pages/ForRent/EditForRent";
 import ForSale from "./Pages/ForSale/ForSale";
 import CreateForSale from "./Pages/ForSale/CreateForSale";
+import Contact from "./Pages/Contact/Contact.jsx";
 
 function App() {
   return (
@@ -58,6 +59,8 @@ function AppContent() {
 
               <Route path="/sell-homes" element={<ForSale />} />
               <Route path="/sell-homes/create" element={<CreateForSale />} />
+
+              <Route path="/contacts" element={<Contact />} />
 
               <Route path="/setting" element={<Setting />} />
               <Route path="/profile" element={<Profile />} />

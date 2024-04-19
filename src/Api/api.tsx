@@ -114,3 +114,30 @@ export const getSaleHomesByAgentId = async() => {
         return error
     }
 };
+
+
+// ====================Contact
+
+export const getUsersFromAgentId = async(id: any) => {
+    try{
+        const result = await axios.post(`${URL}/message/agent/${id}`);
+        return result;
+    }catch(error){
+        return error
+    }
+};
+
+export const getUserMessages = async(id: any) => {
+    try{
+        const storedData = localStorage.getItem('agent');
+        let agent = '';
+        if (storedData) {
+            const parsedData = JSON.parse(storedData);
+            agent = parsedData._id;
+        }
+        const result = await axios.post(`${URL}/message/user/${id}`, { agent });
+        return result;
+    }catch(error){
+        return error
+    }
+};

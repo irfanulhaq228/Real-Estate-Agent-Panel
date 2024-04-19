@@ -11,6 +11,7 @@ import { FaHome } from "react-icons/fa";
 import { CgLogOut } from "react-icons/cg";
 import { IoIosArrowDown } from "react-icons/io";
 import { TbHomeStats, TbHomeDollar } from "react-icons/tb";
+import { MdMessage } from "react-icons/md";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
@@ -100,6 +101,16 @@ const Sidebar = () => {
                 </li>
               </>
             )}
+            {/* Contacts */}
+            <li
+              className={`${
+                pageNavigate === "contact" && "bg-[var(--border-color)]"
+              } cursor-pointer p-2 rounded-[8px] hover:bg-[var(--border-color)] flex items-center gap-4 text-[15px]`}
+              onClick={() => fn_navigationTo({ nav: "/contacts" })}
+            >
+              <MdMessage className="scale-[1.2]" />
+              Contacts
+            </li>
             {/* Setting */}
             <li
               className={`${
