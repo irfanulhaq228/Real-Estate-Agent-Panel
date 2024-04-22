@@ -6,17 +6,27 @@ import PagesHeader from "../../Components/PagesHeader/PagesHeader";
 
 import noMsg from "../../assets/img/no-message.png";
 
-import { IoCheckmarkDoneOutline } from "react-icons/io5";
+// import { IoCheckmarkDoneOutline } from "react-icons/io5";
 import { LuSendHorizonal } from "react-icons/lu";
-import { getUserMessages, getUsersFromAgentId } from "../../Api/api";
+import {
+  getUserMessages,
+  getUsersFromAgentId,
+  sendMessage,
+} from "../../Api/api";
+import toast from "react-hot-toast";
+import { RotatingLines } from "react-loader-spinner";
 
 const Contact = () => {
   const dispatch = useDispatch();
   const [users, setUsers] = useState<any>([]);
+  const [agent, setAgent] = useState<any>({});
+  const [loader, setLoader] = useState(false);
   const [messages, setMessages] = useState<any>([]);
   const [selectedUser, setSelectedUser] = useState({});
+  const [highlightedUser, setHighlightedUser] = useState("");
   const [chatName, setChatName] = useState("");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const textMessage = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     dispatch(updatePageNavigation("contact"));
@@ -35,10 +45,12 @@ const Contact = () => {
       }
     }
     fn_getUsers();
+    if (localStorage.getItem("agent")) {
+      setAgent(localStorage.getItem("agent"));
+    }
   }, []);
 
   useEffect(() => {
-    console.log(messagesContainerRef);
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight;
@@ -47,6 +59,7 @@ const Contact = () => {
 
   const fn_showUserMessages = async (userId: string, chatName: string) => {
     setChatName(chatName);
+    setHighlightedUser(userId);
     const result: any = await getUserMessages(userId);
     if (result?.status === 200) {
       setSelectedUser(result?.data?.message);
@@ -54,6 +67,41 @@ const Contact = () => {
     } else {
       setMessages([]);
       setSelectedUser({});
+    }
+  };
+
+  const fn_sendMessage = async (e: any) => {
+    e.preventDefault();
+    if (textMessage.current !== null && textMessage.current.value !== "") {
+      const currentTime = new Date();
+      const formattedTime = currentTime.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      const obj = {
+        user: highlightedUser,
+        agent: JSON.parse(agent)._id,
+        sender: "agent",
+        message: textMessage.current.value,
+        time: formattedTime,
+      };
+      const result: any = await sendMessage(obj);
+      setLoader(true);
+      if (result.status === 200) {
+        textMessage.current.value = "";
+        setLoader(false);
+        setMessages((prev: any) => [
+          ...prev,
+          {
+            sender: "agent",
+            message: obj.message,
+            time: obj.time,
+          },
+        ]);
+      } else {
+        setLoader(false);
+        toast.error("Sending Failed");
+      }
     }
   };
 
@@ -69,7 +117,9 @@ const Contact = () => {
               users?.map((item: any, index: number) => (
                 <p
                   key={index}
-                  className="cursor-pointer border-b leading-7 hover:bg-gray-200"
+                  className={`cursor-pointer border-b leading-7 hover:bg-gray-200 ${
+                    highlightedUser == item?.user?._id && "bg-gray-200"
+                  }`}
                   onClick={() =>
                     fn_showUserMessages(item?.user?._id, item?.user?.name)
                   }
@@ -102,17 +152,17 @@ const Contact = () => {
                         <span>{item?.message}</span>
                         <span className="text-[9px] font-[400] flex items-center gap-2 justify-end">
                           {item?.time}
-                          <IoCheckmarkDoneOutline className="text-black scale-[1.4]" />
+                          {/* <IoCheckmarkDoneOutline className="text-black scale-[1.4]" /> */}
                         </span>
                       </p>
                     </div>
                   ) : (
-                    <div className="flex justify-start">
+                    <div key={index} className="flex justify-start">
                       <p className="bg-[var(--sidebar-color)] text-white py-2 px-2 rounded-lg min-w-[170px] max-w-[max-content] flex flex-col gap-1">
                         <span>{item?.message}</span>
                         <span className="text-[9px] font-[400] flex items-center gap-2 justify-end">
                           {item?.time}
-                          <IoCheckmarkDoneOutline className="text-white scale-[1.4]" />
+                          {/* <IoCheckmarkDoneOutline className="text-white scale-[1.4]" /> */}
                         </span>
                       </p>
                     </div>
@@ -126,10 +176,37 @@ const Contact = () => {
             </div>
           </div>
           {Object.keys(selectedUser)?.length > 0 && (
-            <div className="flex items-center gap-2 bg-white py-2 px-3 rounded-lg">
-              <input className="flex-1 bg-transparent focus:outline-none text-[13px] font-[500]" />
-              <LuSendHorizonal className="w-[30px] scale-[1.3] text-[var(--sidebar-color)] cursor-pointer" />
-            </div>
+            <form
+              className="flex items-center gap-2 bg-white py-2 px-3 rounded-lg"
+              onSubmit={(e) => fn_sendMessage(e)}
+            >
+              <input
+                className="flex-1 bg-transparent focus:outline-none text-[13px] font-[500]"
+                ref={textMessage}
+              />
+              {!loader ? (
+                <button
+                  type="submit"
+                  className="w-[20px] scale-[1.3] text-[var(--sidebar-color)] cursor-pointer"
+                >
+                  <LuSendHorizonal />
+                </button>
+              ) : (
+                <button
+                  disabled={true}
+                  type="submit"
+                  className="w-[20px] scale-[1.3] text-[var(--sidebar-color)] cursor-pointer"
+                >
+                  <RotatingLines
+                    visible={true}
+                    width="18"
+                    strokeWidth="5"
+                    animationDuration="0.75"
+                    ariaLabel="rotating-lines-loading"
+                  />
+                </button>
+              )}
+            </form>
           )}
         </div>
       </div>
