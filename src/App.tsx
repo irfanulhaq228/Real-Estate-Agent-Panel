@@ -1,13 +1,14 @@
 import "./App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import io from "socket.io-client";
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from "react-router-dom";
 
-import { RootState, updateLogin } from "./Features/Features";
+import { RootState, updateLogin, updateNewMsgs } from "./Features/Features";
 import Navbar from "./Components/Navbar/Navbar";
 import Sidebar from "./Components/Sidebar/Sidebar";
 import Dashboard from "./Pages/Dashboard/Dashboard";
@@ -22,6 +23,9 @@ import ForSale from "./Pages/ForSale/ForSale";
 import CreateForSale from "./Pages/ForSale/CreateForSale";
 import Contact from "./Pages/Contact/Contact.jsx";
 
+import { SOCKET_URL } from "./url.js";
+const socket = io(SOCKET_URL);
+
 function App() {
   return (
     <Router>
@@ -34,12 +38,35 @@ function AppContent() {
   const dispatch = useDispatch();
   const darkMode = useSelector((state: RootState) => state.darkMode);
   const loggedIn = useSelector((state: RootState) => state.loggedIn);
+  const notifyMsgs = useSelector((state: RootState) => state.newMsgs);
+
+  const [newMessage, setNewMessage] = useState<any[]>([]);
 
   useEffect(() => {
     if(localStorage.getItem('agent')){
       dispatch(updateLogin(true));
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const handleMessage = (msg: any) => {
+      setNewMessage((prev:any) => [...prev, { ...msg }]);
+    };
+    socket.on("msg", handleMessage);
+    return () => {
+      socket.off("msg", handleMessage);
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    if (newMessage?.length > 0) {
+      const newMsg = newMessage?.[0];
+      dispatch(updateNewMsgs([...notifyMsgs, { ...newMsg }]));
+      setTimeout(() => {
+        setNewMessage([]);
+      }, 500);
+    }
+  }, [newMessage]);
 
   return (
     <div className={`${!darkMode ? "bg-[#F1F5F9]" : "bg-[#24303F]"} flex min-h-screen`}>

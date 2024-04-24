@@ -20,8 +20,8 @@ const { confirm } = Modal;
 const GetForRent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [ viewHome, setViewHome ] = useState(false);
-  const [ singleData, setSingleData ] = useState({});
+  const [viewHome, setViewHome] = useState(false);
+  const [singleData, setSingleData] = useState({});
   const darkMode = useSelector((state: RootState) => state.darkMode);
   const [data, setData]: any[] = useState([]);
   useEffect(() => {
@@ -63,12 +63,16 @@ const GetForRent = () => {
   const fn_viewInfo = (data: any) => {
     setSingleData(data);
     setViewHome(true);
-  }
+  };
   return (
     <div className="get-for-rent">
       <PagesHeader title="Homes For Rent" nav={"Homes For Rent"} subnav="" />
       {viewHome && (
-        <ViewForRent viewHome={viewHome} setViewHome={setViewHome} singleData={singleData} />
+        <ViewForRent
+          viewHome={viewHome}
+          setViewHome={setViewHome}
+          singleData={singleData}
+        />
       )}
       <div className="m-5 flex flex-col sm:flex-row justify-between items-center gap-3">
         <p className="font-[600] text-[grey] text-[13px]">
@@ -105,37 +109,70 @@ const GetForRent = () => {
               </tr>
             </thead>
             <tbody>
-              {data?.length > 0  ? data?.map((item: any, index: number) => (
-                <tr
-                key={index}
-                className={`text-[9px] sm:text-[10px] md:text-[12px] h-[40px] border-b border-[var(--border-color)] ${
-                  darkMode && "text-[var(--text-color-dark)]"
-                }`}
-              >
-                <td className="font-[600]">&nbsp;{index+1}</td>
-                <td className="ps-1">
-                  <img src={`${IMAGE_URL}/${item?.images[0]}`} className="h-[50px] w-[80px] rounded" style={{ objectFit: "cover" }} />
-                </td>
-                <td className="ps-1 hidden sm:table-cell capitalize">{item?.property}</td>
-                <td className="ps-1">{item?.title}</td>
-                <td className="ps-1 hidden sm:table-cell w-[150px]">{item?.address}</td>
-                <td className="ps-1 hidden sm:table-cell">$ {item?.monthlyPrice}</td>
-                <td className="ps-1 hidden sm:table-cell">{item?.bedrooms}</td>
-                <td className="ps-1 hidden sm:table-cell">{item?.bathrooms}</td>
-                <td className="ps-1">
-                  <span className={`${item?.status ? "bg-[green]" : "bg-[red]"} p-1 rounded-full text-[9px] font-[500] text-white`}>{item?.status ? "Approved" : "Pending"}</span>
-                </td>
-                <td className="flex items-center h-[50px] gap-1">
-                  <MdDelete className="text-[17px] cursor-pointer hover:scale-[1.1]" onClick={() => showDeleteConfirm(item?._id)}  />
-                  <IoMdEye onClick={() => fn_viewInfo(item)} className="text-[19px] cursor-pointer hover:scale-[1.12]" />
-                </td>
-              </tr>
-              )) : (
-                <td colSpan={9} className={`text-[9px] sm:text-[10px] md:text-[12px] h-[45px] text-center border-b border-[var(--border-color)] ${
-                  darkMode && "text-[var(--text-color-dark)]"
-                }`}>
-                  No Data Found
-                </td>
+              {data?.length > 0 ? (
+                data?.map((item: any, index: number) => (
+                  <tr
+                    key={index}
+                    className={`text-[9px] sm:text-[10px] md:text-[12px] h-[40px] border-b border-[var(--border-color)] ${
+                      darkMode && "text-[var(--text-color-dark)]"
+                    }`}
+                  >
+                    <td className="font-[600]">&nbsp;{index + 1}</td>
+                    <td className="ps-1">
+                      <img
+                        src={`${IMAGE_URL}/${item?.images[0]}`}
+                        className="h-[50px] w-[80px] rounded"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </td>
+                    <td className="ps-1 hidden sm:table-cell capitalize">
+                      {item?.property}
+                    </td>
+                    <td className="ps-1">{item?.title}</td>
+                    <td className="ps-1 hidden sm:table-cell w-[150px]">
+                      {item?.address}
+                    </td>
+                    <td className="ps-1 hidden sm:table-cell">
+                      $ {item?.monthlyPrice}
+                    </td>
+                    <td className="ps-1 hidden sm:table-cell">
+                      {item?.bedrooms}
+                    </td>
+                    <td className="ps-1 hidden sm:table-cell">
+                      {item?.bathrooms}
+                    </td>
+                    <td className="ps-1">
+                      <span
+                        className={`${
+                          item?.status ? "bg-[green]" : "bg-[red]"
+                        } p-1 rounded-full text-[9px] font-[500] text-white`}
+                      >
+                        {item?.status ? "Approved" : "Pending"}
+                      </span>
+                    </td>
+                    <td className="flex items-center h-[50px] gap-1">
+                      <MdDelete
+                        className="text-[17px] cursor-pointer hover:scale-[1.1]"
+                        onClick={() => showDeleteConfirm(item?._id)}
+                      />
+                      <IoMdEye
+                        onClick={() => fn_viewInfo(item)}
+                        className="text-[19px] cursor-pointer hover:scale-[1.12]"
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan={9}
+                    className={`text-[9px] sm:text-[10px] md:text-[12px] h-[45px] text-center border-b border-[var(--border-color)] ${
+                      darkMode && "text-[var(--text-color-dark)]"
+                    }`}
+                  >
+                    No Data Found
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>

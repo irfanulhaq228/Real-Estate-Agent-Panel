@@ -18,6 +18,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const showSidebar = useSelector((state: RootState) => state.showSideBar);
   const pageNavigate = useSelector((state: RootState) => state.pageNavigate);
+  const notifyMsgs = useSelector((state: RootState) => state.newMsgs);
   const [properties, setProterties] = useState(false);
   const fn_controlSidebar = () => {
     dispatch(updateSidebar(false));
@@ -30,7 +31,7 @@ const Sidebar = () => {
   };
   const fn_showSubMenus = () => {
     setProterties(!properties);
-  }
+  };
   const fn_logout = () => {
     dispatch(updateLogin(false));
     navigate("/sign-in");
@@ -70,7 +71,8 @@ const Sidebar = () => {
             {/* Properties */}
             <li
               className={`${
-                (pageNavigate === "forRent" || pageNavigate === "forSale") && "bg-[var(--border-color)]"
+                (pageNavigate === "forRent" || pageNavigate === "forSale") &&
+                "bg-[var(--border-color)]"
               } cursor-pointer p-2 rounded-[8px] hover:bg-[var(--border-color)] flex items-center gap-4 text-[15px]`}
               onClick={() => fn_showSubMenus()}
             >
@@ -110,6 +112,11 @@ const Sidebar = () => {
             >
               <MdMessage className="scale-[1.2]" />
               Contacts
+              {pageNavigate !== "contact" && notifyMsgs && notifyMsgs?.length > 0 && (
+                <p className="w-[18px] h-[18px] text-[10px] flex justify-center items-center font-[500] bg-white text-black ms-[62px] rounded-full pt-[1px]">
+                  {notifyMsgs?.length}
+                </p>
+              )}
             </li>
             {/* Setting */}
             <li

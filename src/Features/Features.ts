@@ -5,6 +5,7 @@ interface FeaturesState {
     pageNavigate: string;
     darkMode: boolean;
     loggedIn: boolean;
+    newMsgs: any
 }
 
 const initialState: FeaturesState = {
@@ -12,6 +13,7 @@ const initialState: FeaturesState = {
     pageNavigate: "dashboard",
     darkMode: false,
     loggedIn: false,
+    newMsgs: []
 }
 
 export const featuresSlice = createSlice({
@@ -30,9 +32,12 @@ export const featuresSlice = createSlice({
         updateLogin: (state, action: PayloadAction<boolean>) => {
             state.loggedIn = action.payload;
         },
+        updateNewMsgs: (state, action: PayloadAction<any>) => {
+            state.newMsgs = action.payload;
+        }
     }
 });
 
-export const { updateSidebar, updatePageNavigation, updateWebMode, updateLogin } = featuresSlice.actions;
+export const { updateSidebar, updatePageNavigation, updateWebMode, updateLogin, updateNewMsgs } = featuresSlice.actions;
 export const featuresReducer = featuresSlice.reducer;
 export type RootState = ReturnType<typeof featuresReducer>;
