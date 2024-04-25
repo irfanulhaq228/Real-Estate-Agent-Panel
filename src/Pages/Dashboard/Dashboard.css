@@ -1,0 +1,10 @@
+.dashboard .section-1 .box1, .box2, .box3 {
+    opacity: 0;
+    scale: 1.05;
+    transition: all 0.5s ease-in;
+}
+
+.animate-opacity {
+    opacity: 1 !important;
+    scale: 1 !important;
+}

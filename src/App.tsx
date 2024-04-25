@@ -2,11 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { RootState, updateLogin, updateNewMsgs } from "./Features/Features";
 import Navbar from "./Components/Navbar/Navbar";
@@ -43,14 +39,14 @@ function AppContent() {
   const [newMessage, setNewMessage] = useState<any[]>([]);
 
   useEffect(() => {
-    if(localStorage.getItem('agent')){
+    if (localStorage.getItem("agent")) {
       dispatch(updateLogin(true));
     }
   }, []);
 
   useEffect(() => {
     const handleMessage = (msg: any) => {
-      setNewMessage((prev:any) => [...prev, { ...msg }]);
+      setNewMessage((prev: any) => [...prev, { ...msg }]);
     };
     socket.on("msg", handleMessage);
     return () => {
@@ -69,12 +65,15 @@ function AppContent() {
   }, [newMessage]);
 
   return (
-    <div className={`${!darkMode ? "bg-[#F1F5F9]" : "bg-[#24303F]"} flex min-h-screen`}>
+    <div
+      className={`${
+        !darkMode ? "bg-[#F1F5F9]" : "bg-[#24303F]"
+      } flex min-h-screen`}
+    >
       {loggedIn && <Sidebar />}
       <div className="flex-1">
         {loggedIn && <Navbar />}
         <Routes>
-          
           {loggedIn ? (
             <>
               <Route path="/" element={<Dashboard />} />
@@ -99,7 +98,6 @@ function AppContent() {
               <Route path="/*" element={<Signin />} />
             </>
           )}
-
         </Routes>
       </div>
     </div>
